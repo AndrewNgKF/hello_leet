@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello LeetCode — Dashboard</title>
+  <style>* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  background: #0d1117; color: #c9d1d9; line-height: 1.5;
+  padding: 2rem; max-width: 1100px; margin: 0 auto;
+}
+h1 { color: #f0f6fc; font-size: 1.8rem; margin-bottom: 0.3rem; }
+h2 { color: #f0f6fc; font-size: 1.2rem; margin: 2rem 0 1rem; border-bottom: 1px solid #21262d; padding-bottom: 0.5rem; }
+.subtitle { color: #8b949e; margin-bottom: 2rem; }
+.header { text-align: center; margin-bottom: 2rem; }
+
+.ring-container { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin: 1.5rem 0; }
+.ring { text-align: center; }
+.ring svg { width: 140px; height: 140px; }
+.ring-label { font-size: 0.85rem; color: #8b949e; margin-top: 0.3rem; }
+.ring-value { font-size: 1.5rem; font-weight: 700; fill: #f0f6fc; }
+.ring circle { fill: none; stroke-width: 8; }
+.ring .bg { stroke: #21262d; }
+.ring .fg { stroke-linecap: round; transition: stroke-dashoffset 1s ease; }
+.ring.overall .fg { stroke: #58a6ff; }
+.ring.easy .fg    { stroke: #3fb950; }
+.ring.medium .fg  { stroke: #d29922; }
+.ring.hard .fg    { stroke: #f85149; }
+
+.stats-row { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin: 1.5rem 0; }
+.stat-card {
+  background: #161b22; border: 1px solid #21262d; border-radius: 8px;
+  padding: 1rem 1.5rem; text-align: center; min-width: 120px;
+}
+.stat-card .num { font-size: 1.8rem; font-weight: 700; color: #f0f6fc; }
+.stat-card .label { font-size: 0.8rem; color: #8b949e; }
+
+.patterns-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.75rem; }
+.pattern-card {
+  background: #161b22; border: 1px solid #21262d; border-radius: 8px;
+  padding: 0.75rem 1rem; display: flex; align-items: center; gap: 0.75rem;
+  min-width: 0;
+}
+.pattern-card.complete    { border-color: #238636; }
+.pattern-card.in-progress { border-color: #d29922; }
+.pattern-name {
+  flex: 1; font-size: 0.85rem; font-weight: 500;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0;
+}
+.pattern-bar { flex: 0 0 60px; height: 6px; background: #21262d; border-radius: 3px; overflow: hidden; }
+.pattern-fill { height: 100%; background: #3fb950; border-radius: 3px; transition: width 0.5s; }
+.pattern-count { flex-shrink: 0; font-size: 0.8rem; color: #8b949e; min-width: 36px; text-align: right; }
+
+table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+th { text-align: left; color: #8b949e; font-weight: 500; padding: 0.5rem 0.75rem; border-bottom: 1px solid #21262d; }
+td { padding: 0.5rem 0.75rem; border-bottom: 1px solid #161b22; }
+tr.solved { background: #0d1117; }
+tr.todo   { opacity: 0.65; }
+code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.82rem; }
+
+.diff {
+  font-size: 0.75rem; font-weight: 600; padding: 0.15rem 0.5rem;
+  border-radius: 10px; text-transform: uppercase; white-space: nowrap;
+}
+.diff.easy   { background: #0d2818; color: #3fb950; }
+.diff.medium { background: #2d1b00; color: #d29922; }
+.diff.hard   { background: #2d0a0a; color: #f85149; }
+
+.tabs { display: flex; gap: 0; margin-bottom: 1rem; }
+.tab {
+  padding: 0.5rem 1.2rem; cursor: pointer; border: 1px solid #21262d;
+  background: #0d1117; color: #8b949e; font-size: 0.85rem;
+}
+.tab:first-child { border-radius: 6px 0 0 6px; }
+.tab:last-child  { border-radius: 0 6px 6px 0; }
+.tab.active { background: #161b22; color: #f0f6fc; border-color: #30363d; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+.timestamp { color: #8b949e; font-size: 0.8rem; text-align: center; margin-top: 3rem; }
+
+@media (max-width: 600px) {
+  body { padding: 1rem; }
+  .ring svg { width: 100px; height: 100px; }
+  .patterns-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+  <div class="header">
+    <h1>🧩 Hello LeetCode</h1>
+    <div class="subtitle">Your progress dashboard</div>
+  </div>
+
+  <div class="ring-container">
+    <div class="ring overall">
+  <svg viewBox="0 0 120 120">
+    <circle class="bg" cx="60" cy="60" r="54" />
+    <circle class="fg" cx="60" cy="60" r="54"
+      stroke-dasharray="339.29200658769764" stroke-dashoffset="339.29200658769764"
+      transform="rotate(-90 60 60)" />
+    <text class="ring-value" x="60" y="65" text-anchor="middle">0/62</text>
+  </svg>
+  <div class="ring-label">Overall</div>
+</div>
+
+    <div class="ring easy">
+  <svg viewBox="0 0 120 120">
+    <circle class="bg" cx="60" cy="60" r="54" />
+    <circle class="fg" cx="60" cy="60" r="54"
+      stroke-dasharray="339.29200658769764" stroke-dashoffset="339.29200658769764"
+      transform="rotate(-90 60 60)" />
+    <text class="ring-value" x="60" y="65" text-anchor="middle">0/15</text>
+  </svg>
+  <div class="ring-label">Easy</div>
+</div>
+
+    <div class="ring medium">
+  <svg viewBox="0 0 120 120">
+    <circle class="bg" cx="60" cy="60" r="54" />
+    <circle class="fg" cx="60" cy="60" r="54"
+      stroke-dasharray="339.29200658769764" stroke-dashoffset="339.29200658769764"
+      transform="rotate(-90 60 60)" />
+    <text class="ring-value" x="60" y="65" text-anchor="middle">0/32</text>
+  </svg>
+  <div class="ring-label">Medium</div>
+</div>
+
+    <div class="ring hard">
+  <svg viewBox="0 0 120 120">
+    <circle class="bg" cx="60" cy="60" r="54" />
+    <circle class="fg" cx="60" cy="60" r="54"
+      stroke-dasharray="339.29200658769764" stroke-dashoffset="339.29200658769764"
+      transform="rotate(-90 60 60)" />
+    <text class="ring-value" x="60" y="65" text-anchor="middle">0/8</text>
+  </svg>
+  <div class="ring-label">Hard</div>
+</div>
+
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card"><div class="num">0</div><div class="label">Solved</div></div>
+    <div class="stat-card"><div class="num">62</div><div class="label">Remaining</div></div>
+    <div class="stat-card"><div class="num">0</div><div class="label">Patterns Started</div></div>
+    <div class="stat-card"><div class="num">0</div><div class="label">Patterns Complete</div></div>
+  </div>
+
+  <h2>📊 Patterns</h2>
+  <div class="patterns-grid"><div class="pattern-card not-started">
+  <div class="pattern-name">00_basics</div>
+  <div class="pattern-bar"><div class="pattern-fill" style="width: 0%"></div></div>
+  <div class="pattern-count">0/7</div>
+</div>
+<div class="pattern-card not-started">
+  <div class="pattern-name">01_two_pointers</div>
+  <div class="pattern-bar"><div class="pattern-fill" style="width: 0%"></div></div>
+  <div class="pattern-count">0/3</div>
+</div>
+<div class="pattern-card not-started">
+  <div class="pattern-name">02_sliding_window</div>
+  <div class="pattern-bar"><div class="pattern-fill" style="width: 0%"></div></div>
+  <div class="pattern-count">0/3</div>
+</div>
+<div class="pattern-card not-started">
+  <div class="pattern-name">03_fast_slow_pointers</div>
+  <div class="pattern-bar"><div class="pattern-fill" style="width: 0%"></div></div>
+  <div class="pattern-count">0/3</div>
+</div>
+<div class="pattern-card not-started">
+  <div class="pattern-name">04_merge_intervals</div>
+  <div class="pattern-bar"><div class="pattern-fill" style="width: 0%"></div></div>
+  <div class="pattern-count">0/3</div>
+</div>
+<div class="pattern-card not-started">
+  <div class="pattern-name">05_cyclic_sort</div>
+  <div class="pattern-bar"><div class="pattern-fill" style="width: 0%"></div></div>
+  <div class="pattern-count">0/3</div>
+</div>
+<div class="pattern-card not-started">
+  <div class="pattern-name">06_linked_list_reversal</div>
+  <div class="pattern-bar"><div class="pattern-fill" style="width: 0%"></div></div>
+  <div class="pattern-count">0/3</div>
+</div>
+<div class="pattern-card not-started">
+  <div class="pattern-name">07_tree_bfs</div>
+  <div class="pattern-bar"><div class="pattern-fill" style="width: 0%"></div></div>
+  <div class="pattern-count">0/3</div>
+</div>
+<div class="pattern-card not-started">
+  <div class="pattern-name">08_tree_dfs</div>
+  <div class="pattern-bar"><div class="pattern-fill" style="width: 0%"></div></div>
+  <div class="pattern-count">0/3</div>
+</div>
+<div class="pattern-card not-started">
+  <div class="pattern-name">09_two_heaps</div>
+  <div class="pattern-bar"><div class="pattern-fill" style="width: 0%"></div></div>
+  <div class="pattern-count">0/2</div>
+</div>
+<div class="pattern-card not-started">
+  <div class="pattern-name">10_subsets_backtracking</div>
+  <div class="pattern-bar"><div class="pattern-fill" style="width: 0%"></div></div>
+  <div class="pattern-count">0/3</div>
+</div>
+<div class="pattern-card not-started">
+  <div class="pattern-name">11_binary_search</div>
+  <div class="pattern-bar"><div class="pattern-fill" style="width: 0%"></div></div>
+  <div class="pattern-count">0/3</div>
+</div>
+<div class="pattern-card not-started">
+  <div class="pattern-name">12_top_k_elements</div>
+  <div class="pattern-bar"><div class="pattern-fill" style="width: 0%"></div></div>
+  <div class="pattern-count">0/3</div>
+</div>
+<div class="pattern-card not-started">
+  <div class="pattern-name">13_k_way_merge</div>
+  <div class="pattern-bar"><div class="pattern-fill" style="width: 0%"></div></div>
+  <div class="pattern-count">0/2</div>
+</div>
+<div class="pattern-card not-started">
+  <div class="pattern-name">14_topological_sort</div>
+  <div class="pattern-bar"><div class="pattern-fill" style="width: 0%"></div></div>
+  <div class="pattern-count">0/2</div>
+</div>
+<div class="pattern-card not-started">
+  <div class="pattern-name">15_dynamic_programming</div>
+  <div class="pattern-bar"><div class="pattern-fill" style="width: 0%"></div></div>
+  <div class="pattern-count">0/3</div>
+</div>
+<div class="pattern-card not-started">
+  <div class="pattern-name">16_greedy</div>
+  <div class="pattern-bar"><div class="pattern-fill" style="width: 0%"></div></div>
+  <div class="pattern-count">0/3</div>
+</div>
+<div class="pattern-card not-started">
+  <div class="pattern-name">17_monotonic_stack</div>
+  <div class="pattern-bar"><div class="pattern-fill" style="width: 0%"></div></div>
+  <div class="pattern-count">0/3</div>
+</div>
+<div class="pattern-card not-started">
+  <div class="pattern-name">18_union_find</div>
+  <div class="pattern-bar"><div class="pattern-fill" style="width: 0%"></div></div>
+  <div class="pattern-count">0/2</div>
+</div>
+<div class="pattern-card not-started">
+  <div class="pattern-name">19_trie</div>
+  <div class="pattern-bar"><div class="pattern-fill" style="width: 0%"></div></div>
+  <div class="pattern-count">0/2</div>
+</div>
+<div class="pattern-card not-started">
+  <div class="pattern-name">20_bit_manipulation</div>
+  <div class="pattern-bar"><div class="pattern-fill" style="width: 0%"></div></div>
+  <div class="pattern-count">0/3</div>
+</div>
+</div>
+
+  <h2>📋 Problems</h2>
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('all')">All Problems</div>
+    <div class="tab" onclick="switchTab('recent')">Recent Activity</div>
+  </div>
+
+  <div id="tab-all" class="tab-content active">
+    <table>
+      <thead><tr><th></th><th>Problem</th><th>Pattern</th><th>Diff</th><th>First Solved</th><th>Last Run</th></tr></thead>
+      <tbody><tr class="todo">
+  <td>⬜</td>
+  <td><code>arrays_and_hashes</code></td>
+  <td>00_basics</td>
+  <td><span class="diff unknown">?</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:33</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>binary_tree</code></td>
+  <td>00_basics</td>
+  <td><span class="diff unknown">?</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:33</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>doubly_linked_list</code></td>
+  <td>00_basics</td>
+  <td><span class="diff unknown">?</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:33</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>graph</code></td>
+  <td>00_basics</td>
+  <td><span class="diff unknown">?</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:34</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>heap</code></td>
+  <td>00_basics</td>
+  <td><span class="diff unknown">?</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:34</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>linked_list</code></td>
+  <td>00_basics</td>
+  <td><span class="diff unknown">?</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:34</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>stacks_and_queues</code></td>
+  <td>00_basics</td>
+  <td><span class="diff unknown">?</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:34</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>container_with_most_water</code></td>
+  <td>01_two_pointers</td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:43:39</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>three_sum</code></td>
+  <td>01_two_pointers</td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:43:40</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>two_sum_ii</code></td>
+  <td>01_two_pointers</td>
+  <td><span class="diff easy">Easy</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:43:40</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>longest_substring_no_repeat</code></td>
+  <td>02_sliding_window</td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:35</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>max_subarray_sum_k</code></td>
+  <td>02_sliding_window</td>
+  <td><span class="diff easy">Easy</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:36</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>minimum_window_substring</code></td>
+  <td>02_sliding_window</td>
+  <td><span class="diff hard">Hard</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:36</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>find_duplicate</code></td>
+  <td>03_fast_slow_pointers</td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:36</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>happy_number</code></td>
+  <td>03_fast_slow_pointers</td>
+  <td><span class="diff easy">Easy</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:36</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>linked_list_cycle</code></td>
+  <td>03_fast_slow_pointers</td>
+  <td><span class="diff easy">Easy</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:37</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>insert_interval</code></td>
+  <td>04_merge_intervals</td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:37</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>meeting_rooms</code></td>
+  <td>04_merge_intervals</td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:37</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>merge_intervals</code></td>
+  <td>04_merge_intervals</td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:37</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>find_all_duplicates</code></td>
+  <td>05_cyclic_sort</td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:38</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>first_missing_positive</code></td>
+  <td>05_cyclic_sort</td>
+  <td><span class="diff hard">Hard</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:38</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>missing_number</code></td>
+  <td>05_cyclic_sort</td>
+  <td><span class="diff easy">Easy</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:38</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>reverse_linked_list</code></td>
+  <td>06_linked_list_reversal</td>
+  <td><span class="diff easy">Easy</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:38</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>reverse_linked_list_ii</code></td>
+  <td>06_linked_list_reversal</td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:39</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>reverse_nodes_k_group</code></td>
+  <td>06_linked_list_reversal</td>
+  <td><span class="diff hard">Hard</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:39</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>level_order_traversal</code></td>
+  <td>07_tree_bfs</td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:39</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>right_side_view</code></td>
+  <td>07_tree_bfs</td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:39</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>zigzag_traversal</code></td>
+  <td>07_tree_bfs</td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:40</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>diameter</code></td>
+  <td>08_tree_dfs</td>
+  <td><span class="diff easy">Easy</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:40</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>max_depth</code></td>
+  <td>08_tree_dfs</td>
+  <td><span class="diff easy">Easy</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:40</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>path_sum</code></td>
+  <td>08_tree_dfs</td>
+  <td><span class="diff easy">Easy</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:40</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>find_median</code></td>
+  <td>09_two_heaps</td>
+  <td><span class="diff hard">Hard</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:41</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>sliding_window_median</code></td>
+  <td>09_two_heaps</td>
+  <td><span class="diff hard">Hard</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:41</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>combination_sum</code></td>
+  <td>10_subsets_backtracking</td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:41</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>permutations</code></td>
+  <td>10_subsets_backtracking</td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:41</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>subsets</code></td>
+  <td>10_subsets_backtracking</td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:42</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>binary_search</code></td>
+  <td>11_binary_search</td>
+  <td><span class="diff easy">Easy</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:42</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>find_peak_element</code></td>
+  <td>11_binary_search</td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:42</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>search_rotated_array</code></td>
+  <td>11_binary_search</td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:42</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>k_closest_points</code></td>
+  <td>12_top_k_elements</td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:43</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>kth_largest</code></td>
+  <td>12_top_k_elements</td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:43</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>top_k_frequent</code></td>
+  <td>12_top_k_elements</td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:43</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>kth_smallest_sorted_matrix</code></td>
+  <td>13_k_way_merge</td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:43</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>merge_k_sorted_lists</code></td>
+  <td>13_k_way_merge</td>
+  <td><span class="diff hard">Hard</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:44</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>course_schedule</code></td>
+  <td>14_topological_sort</td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:44</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>course_schedule_ii</code></td>
+  <td>14_topological_sort</td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:44</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>climbing_stairs</code></td>
+  <td>15_dynamic_programming</td>
+  <td><span class="diff easy">Easy</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:44</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>coin_change</code></td>
+  <td>15_dynamic_programming</td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:45</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>longest_common_subsequence</code></td>
+  <td>15_dynamic_programming</td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:45</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>gas_station</code></td>
+  <td>16_greedy</td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:45</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>jump_game</code></td>
+  <td>16_greedy</td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:45</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>task_scheduler</code></td>
+  <td>16_greedy</td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:46</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>daily_temperatures</code></td>
+  <td>17_monotonic_stack</td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:46</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>largest_rectangle</code></td>
+  <td>17_monotonic_stack</td>
+  <td><span class="diff hard">Hard</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:46</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>next_greater_element</code></td>
+  <td>17_monotonic_stack</td>
+  <td><span class="diff easy">Easy</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:46</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>number_of_islands</code></td>
+  <td>18_union_find</td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:47</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>redundant_connection</code></td>
+  <td>18_union_find</td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:47</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>implement_trie</code></td>
+  <td>19_trie</td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:47</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>word_search_ii</code></td>
+  <td>19_trie</td>
+  <td><span class="diff hard">Hard</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:47</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>counting_bits</code></td>
+  <td>20_bit_manipulation</td>
+  <td><span class="diff easy">Easy</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:48</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>power_of_two</code></td>
+  <td>20_bit_manipulation</td>
+  <td><span class="diff easy">Easy</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:48</td>
+</tr>
+<tr class="todo">
+  <td>⬜</td>
+  <td><code>single_number</code></td>
+  <td>20_bit_manipulation</td>
+  <td><span class="diff easy">Easy</span></td>
+  <td>—</td>
+  <td>2026-02-10 02:32:48</td>
+</tr>
+</tbody>
+    </table>
+  </div>
+
+  <div id="tab-recent" class="tab-content">
+    <table>
+      <thead><tr><th></th><th>Problem</th><th>Diff</th><th>Timestamp</th></tr></thead>
+      <tbody><tr>
+  <td>❌</td>
+  <td><code>three_sum</code></td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>2026-02-10 02:43:40</td>
+</tr>
+<tr>
+  <td>❌</td>
+  <td><code>two_sum_ii</code></td>
+  <td><span class="diff easy">Easy</span></td>
+  <td>2026-02-10 02:43:40</td>
+</tr>
+<tr>
+  <td>❌</td>
+  <td><code>container_with_most_water</code></td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>2026-02-10 02:43:39</td>
+</tr>
+<tr>
+  <td>❌</td>
+  <td><code>container_with_most_water</code></td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>2026-02-10 02:39:32</td>
+</tr>
+<tr>
+  <td>❌</td>
+  <td><code>three_sum</code></td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>2026-02-10 02:39:32</td>
+</tr>
+<tr>
+  <td>❌</td>
+  <td><code>two_sum_ii</code></td>
+  <td><span class="diff easy">Easy</span></td>
+  <td>2026-02-10 02:39:32</td>
+</tr>
+<tr>
+  <td>❌</td>
+  <td><code>three_sum</code></td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>2026-02-10 02:39:10</td>
+</tr>
+<tr>
+  <td>❌</td>
+  <td><code>two_sum_ii</code></td>
+  <td><span class="diff easy">Easy</span></td>
+  <td>2026-02-10 02:39:10</td>
+</tr>
+<tr>
+  <td>❌</td>
+  <td><code>container_with_most_water</code></td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>2026-02-10 02:39:09</td>
+</tr>
+<tr>
+  <td>❌</td>
+  <td><code>counting_bits</code></td>
+  <td><span class="diff easy">Easy</span></td>
+  <td>2026-02-10 02:32:48</td>
+</tr>
+<tr>
+  <td>❌</td>
+  <td><code>power_of_two</code></td>
+  <td><span class="diff easy">Easy</span></td>
+  <td>2026-02-10 02:32:48</td>
+</tr>
+<tr>
+  <td>❌</td>
+  <td><code>single_number</code></td>
+  <td><span class="diff easy">Easy</span></td>
+  <td>2026-02-10 02:32:48</td>
+</tr>
+<tr>
+  <td>❌</td>
+  <td><code>number_of_islands</code></td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>2026-02-10 02:32:47</td>
+</tr>
+<tr>
+  <td>❌</td>
+  <td><code>redundant_connection</code></td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>2026-02-10 02:32:47</td>
+</tr>
+<tr>
+  <td>❌</td>
+  <td><code>implement_trie</code></td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>2026-02-10 02:32:47</td>
+</tr>
+<tr>
+  <td>❌</td>
+  <td><code>word_search_ii</code></td>
+  <td><span class="diff hard">Hard</span></td>
+  <td>2026-02-10 02:32:47</td>
+</tr>
+<tr>
+  <td>❌</td>
+  <td><code>task_scheduler</code></td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>2026-02-10 02:32:46</td>
+</tr>
+<tr>
+  <td>❌</td>
+  <td><code>daily_temperatures</code></td>
+  <td><span class="diff medium">Medium</span></td>
+  <td>2026-02-10 02:32:46</td>
+</tr>
+<tr>
+  <td>❌</td>
+  <td><code>largest_rectangle</code></td>
+  <td><span class="diff hard">Hard</span></td>
+  <td>2026-02-10 02:32:46</td>
+</tr>
+<tr>
+  <td>❌</td>
+  <td><code>next_greater_element</code></td>
+  <td><span class="diff easy">Easy</span></td>
+  <td>2026-02-10 02:32:46</td>
+</tr>
+</tbody>
+    </table>
+  </div>
+
+  <div class="timestamp">Generated 2026-02-10 02:43:54</div>
+
+  <script>
+    function switchTab(id) {
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.getElementById('tab-' + id).classList.add('active');
+      event.target.classList.add('active');
+    }
+  </script>
+</body>
+</html>
