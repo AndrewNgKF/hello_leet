@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="refresh" content="10">
   <title>Hello LeetCode — Dashboard</title>
   <style>* { margin: 0; padding: 0; box-sizing: border-box; }
 body {
@@ -98,9 +99,9 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <svg viewBox="0 0 120 120">
     <circle class="bg" cx="60" cy="60" r="54" />
     <circle class="fg" cx="60" cy="60" r="54"
-      stroke-dasharray="339.29200658769764" stroke-dashoffset="339.29200658769764"
+      stroke-dasharray="339.29200658769764" stroke-dashoffset="333.8195548685412"
       transform="rotate(-90 60 60)" />
-    <text class="ring-value" x="60" y="65" text-anchor="middle">0/62</text>
+    <text class="ring-value" x="60" y="65" text-anchor="middle">1/62</text>
   </svg>
   <div class="ring-label">Overall</div>
 </div>
@@ -141,17 +142,16 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   </div>
 
   <div class="stats-row">
-    <div class="stat-card"><div class="num">0</div><div class="label">Solved</div></div>
-    <div class="stat-card"><div class="num">62</div><div class="label">Remaining</div></div>
-    <div class="stat-card"><div class="num">0</div><div class="label">Patterns Started</div></div>
+    <div class="stat-card"><div class="num">1</div><div class="label">Solved</div></div>
+    <div class="stat-card"><div class="num">61</div><div class="label">Todo</div></div>
     <div class="stat-card"><div class="num">0</div><div class="label">Patterns Complete</div></div>
   </div>
 
   <h2>📊 Patterns</h2>
-  <div class="patterns-grid"><div class="pattern-card not-started">
+  <div class="patterns-grid"><div class="pattern-card in-progress">
   <div class="pattern-name">00_basics</div>
-  <div class="pattern-bar"><div class="pattern-fill" style="width: 0%"></div></div>
-  <div class="pattern-count">0/7</div>
+  <div class="pattern-bar"><div class="pattern-fill" style="width: 14%"></div></div>
+  <div class="pattern-count">1/7</div>
 </div>
 <div class="pattern-card not-started">
   <div class="pattern-name">01_two_pointers</div>
@@ -263,62 +263,69 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
 
   <div id="tab-all" class="tab-content active">
     <table>
-      <thead><tr><th></th><th>Problem</th><th>Pattern</th><th>Diff</th><th>First Solved</th><th>Last Run</th></tr></thead>
+      <thead><tr><th></th><th>Problem</th><th>Pattern</th><th>Diff</th><th>Tests</th><th>First Solved</th><th>Last Run</th></tr></thead>
       <tbody><tr class="todo">
   <td>⬜</td>
   <td><code>arrays_and_hashes</code></td>
   <td>00_basics</td>
   <td><span class="diff unknown">?</span></td>
+  <td>2/11</td>
   <td>—</td>
-  <td>2026-02-10 02:32:33</td>
+  <td>2026-02-10 16:29</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
   <td><code>binary_tree</code></td>
   <td>00_basics</td>
   <td><span class="diff unknown">?</span></td>
+  <td>12/21</td>
   <td>—</td>
-  <td>2026-02-10 02:32:33</td>
+  <td>2026-02-10 16:29</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
   <td><code>doubly_linked_list</code></td>
   <td>00_basics</td>
   <td><span class="diff unknown">?</span></td>
+  <td>8/13</td>
   <td>—</td>
-  <td>2026-02-10 02:32:33</td>
+  <td>2026-02-10 16:29</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
   <td><code>graph</code></td>
   <td>00_basics</td>
   <td><span class="diff unknown">?</span></td>
+  <td>8/13</td>
   <td>—</td>
-  <td>2026-02-10 02:32:34</td>
+  <td>2026-02-10 16:29</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
   <td><code>heap</code></td>
   <td>00_basics</td>
   <td><span class="diff unknown">?</span></td>
+  <td>7/13</td>
   <td>—</td>
-  <td>2026-02-10 02:32:34</td>
+  <td>2026-02-10 16:29</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
   <td><code>linked_list</code></td>
   <td>00_basics</td>
   <td><span class="diff unknown">?</span></td>
+  <td>11/20</td>
   <td>—</td>
-  <td>2026-02-10 02:32:34</td>
+  <td>2026-02-10 16:29</td>
 </tr>
-<tr class="todo">
-  <td>⬜</td>
+<tr class="solved">
+  <td>✅</td>
   <td><code>stacks_and_queues</code></td>
   <td>00_basics</td>
   <td><span class="diff unknown">?</span></td>
-  <td>—</td>
-  <td>2026-02-10 02:32:34</td>
+  <td>10/10</td>
+  <td>🏆 2026-02-10 16:29</td>
+  <td>2026-02-10 16:29</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -326,7 +333,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>01_two_pointers</td>
   <td><span class="diff medium">Medium</span></td>
   <td>—</td>
-  <td>2026-02-10 02:43:39</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -334,7 +342,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>01_two_pointers</td>
   <td><span class="diff medium">Medium</span></td>
   <td>—</td>
-  <td>2026-02-10 02:43:40</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -342,7 +351,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>01_two_pointers</td>
   <td><span class="diff easy">Easy</span></td>
   <td>—</td>
-  <td>2026-02-10 02:43:40</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -350,7 +360,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>02_sliding_window</td>
   <td><span class="diff medium">Medium</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:35</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -358,7 +369,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>02_sliding_window</td>
   <td><span class="diff easy">Easy</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:36</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -366,7 +378,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>02_sliding_window</td>
   <td><span class="diff hard">Hard</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:36</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -374,7 +387,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>03_fast_slow_pointers</td>
   <td><span class="diff medium">Medium</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:36</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -382,7 +396,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>03_fast_slow_pointers</td>
   <td><span class="diff easy">Easy</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:36</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -390,7 +405,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>03_fast_slow_pointers</td>
   <td><span class="diff easy">Easy</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:37</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -398,7 +414,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>04_merge_intervals</td>
   <td><span class="diff medium">Medium</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:37</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -406,7 +423,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>04_merge_intervals</td>
   <td><span class="diff medium">Medium</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:37</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -414,7 +432,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>04_merge_intervals</td>
   <td><span class="diff medium">Medium</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:37</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -422,7 +441,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>05_cyclic_sort</td>
   <td><span class="diff medium">Medium</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:38</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -430,7 +450,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>05_cyclic_sort</td>
   <td><span class="diff hard">Hard</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:38</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -438,7 +459,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>05_cyclic_sort</td>
   <td><span class="diff easy">Easy</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:38</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -446,7 +468,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>06_linked_list_reversal</td>
   <td><span class="diff easy">Easy</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:38</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -454,7 +477,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>06_linked_list_reversal</td>
   <td><span class="diff medium">Medium</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:39</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -462,7 +486,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>06_linked_list_reversal</td>
   <td><span class="diff hard">Hard</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:39</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -470,7 +495,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>07_tree_bfs</td>
   <td><span class="diff medium">Medium</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:39</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -478,7 +504,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>07_tree_bfs</td>
   <td><span class="diff medium">Medium</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:39</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -486,7 +513,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>07_tree_bfs</td>
   <td><span class="diff medium">Medium</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:40</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -494,7 +522,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>08_tree_dfs</td>
   <td><span class="diff easy">Easy</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:40</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -502,7 +531,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>08_tree_dfs</td>
   <td><span class="diff easy">Easy</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:40</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -510,7 +540,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>08_tree_dfs</td>
   <td><span class="diff easy">Easy</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:40</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -518,7 +549,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>09_two_heaps</td>
   <td><span class="diff hard">Hard</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:41</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -526,7 +558,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>09_two_heaps</td>
   <td><span class="diff hard">Hard</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:41</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -534,7 +567,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>10_subsets_backtracking</td>
   <td><span class="diff medium">Medium</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:41</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -542,7 +576,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>10_subsets_backtracking</td>
   <td><span class="diff medium">Medium</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:41</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -550,7 +585,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>10_subsets_backtracking</td>
   <td><span class="diff medium">Medium</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:42</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -558,7 +594,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>11_binary_search</td>
   <td><span class="diff easy">Easy</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:42</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -566,7 +603,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>11_binary_search</td>
   <td><span class="diff medium">Medium</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:42</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -574,7 +612,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>11_binary_search</td>
   <td><span class="diff medium">Medium</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:42</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -582,7 +621,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>12_top_k_elements</td>
   <td><span class="diff medium">Medium</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:43</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -590,7 +630,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>12_top_k_elements</td>
   <td><span class="diff medium">Medium</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:43</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -598,7 +639,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>12_top_k_elements</td>
   <td><span class="diff medium">Medium</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:43</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -606,7 +648,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>13_k_way_merge</td>
   <td><span class="diff medium">Medium</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:43</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -614,7 +657,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>13_k_way_merge</td>
   <td><span class="diff hard">Hard</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:44</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -622,7 +666,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>14_topological_sort</td>
   <td><span class="diff medium">Medium</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:44</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -630,7 +675,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>14_topological_sort</td>
   <td><span class="diff medium">Medium</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:44</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -638,7 +684,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>15_dynamic_programming</td>
   <td><span class="diff easy">Easy</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:44</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -646,7 +693,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>15_dynamic_programming</td>
   <td><span class="diff medium">Medium</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:45</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -654,7 +702,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>15_dynamic_programming</td>
   <td><span class="diff medium">Medium</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:45</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -662,7 +711,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>16_greedy</td>
   <td><span class="diff medium">Medium</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:45</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -670,7 +720,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>16_greedy</td>
   <td><span class="diff medium">Medium</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:45</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -678,7 +729,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>16_greedy</td>
   <td><span class="diff medium">Medium</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:46</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -686,7 +738,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>17_monotonic_stack</td>
   <td><span class="diff medium">Medium</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:46</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -694,7 +747,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>17_monotonic_stack</td>
   <td><span class="diff hard">Hard</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:46</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -702,7 +756,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>17_monotonic_stack</td>
   <td><span class="diff easy">Easy</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:46</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -710,7 +765,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>18_union_find</td>
   <td><span class="diff medium">Medium</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:47</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -718,7 +774,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>18_union_find</td>
   <td><span class="diff medium">Medium</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:47</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -726,7 +783,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>19_trie</td>
   <td><span class="diff medium">Medium</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:47</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -734,7 +792,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>19_trie</td>
   <td><span class="diff hard">Hard</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:47</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -742,7 +801,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>20_bit_manipulation</td>
   <td><span class="diff easy">Easy</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:48</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -750,7 +810,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>20_bit_manipulation</td>
   <td><span class="diff easy">Easy</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:48</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 <tr class="todo">
   <td>⬜</td>
@@ -758,7 +819,8 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
   <td>20_bit_manipulation</td>
   <td><span class="diff easy">Easy</span></td>
   <td>—</td>
-  <td>2026-02-10 02:32:48</td>
+  <td>—</td>
+  <td>—</td>
 </tr>
 </tbody>
     </table>
@@ -769,129 +831,51 @@ code { background: #1c2128; padding: 0.15rem 0.4rem; border-radius: 4px; font-si
       <thead><tr><th></th><th>Problem</th><th>Diff</th><th>Timestamp</th></tr></thead>
       <tbody><tr>
   <td>❌</td>
-  <td><code>three_sum</code></td>
-  <td><span class="diff medium">Medium</span></td>
-  <td>2026-02-10 02:43:40</td>
+  <td><code>arrays_and_hashes</code></td>
+  <td><span class="diff unknown">?</span></td>
+  <td>2026-02-10 16:29</td>
 </tr>
 <tr>
   <td>❌</td>
-  <td><code>two_sum_ii</code></td>
-  <td><span class="diff easy">Easy</span></td>
-  <td>2026-02-10 02:43:40</td>
+  <td><code>binary_tree</code></td>
+  <td><span class="diff unknown">?</span></td>
+  <td>2026-02-10 16:29</td>
 </tr>
 <tr>
   <td>❌</td>
-  <td><code>container_with_most_water</code></td>
-  <td><span class="diff medium">Medium</span></td>
-  <td>2026-02-10 02:43:39</td>
+  <td><code>doubly_linked_list</code></td>
+  <td><span class="diff unknown">?</span></td>
+  <td>2026-02-10 16:29</td>
 </tr>
 <tr>
   <td>❌</td>
-  <td><code>container_with_most_water</code></td>
-  <td><span class="diff medium">Medium</span></td>
-  <td>2026-02-10 02:39:32</td>
+  <td><code>graph</code></td>
+  <td><span class="diff unknown">?</span></td>
+  <td>2026-02-10 16:29</td>
 </tr>
 <tr>
   <td>❌</td>
-  <td><code>three_sum</code></td>
-  <td><span class="diff medium">Medium</span></td>
-  <td>2026-02-10 02:39:32</td>
+  <td><code>heap</code></td>
+  <td><span class="diff unknown">?</span></td>
+  <td>2026-02-10 16:29</td>
 </tr>
 <tr>
   <td>❌</td>
-  <td><code>two_sum_ii</code></td>
-  <td><span class="diff easy">Easy</span></td>
-  <td>2026-02-10 02:39:32</td>
+  <td><code>linked_list</code></td>
+  <td><span class="diff unknown">?</span></td>
+  <td>2026-02-10 16:29</td>
 </tr>
 <tr>
-  <td>❌</td>
-  <td><code>three_sum</code></td>
-  <td><span class="diff medium">Medium</span></td>
-  <td>2026-02-10 02:39:10</td>
-</tr>
-<tr>
-  <td>❌</td>
-  <td><code>two_sum_ii</code></td>
-  <td><span class="diff easy">Easy</span></td>
-  <td>2026-02-10 02:39:10</td>
-</tr>
-<tr>
-  <td>❌</td>
-  <td><code>container_with_most_water</code></td>
-  <td><span class="diff medium">Medium</span></td>
-  <td>2026-02-10 02:39:09</td>
-</tr>
-<tr>
-  <td>❌</td>
-  <td><code>counting_bits</code></td>
-  <td><span class="diff easy">Easy</span></td>
-  <td>2026-02-10 02:32:48</td>
-</tr>
-<tr>
-  <td>❌</td>
-  <td><code>power_of_two</code></td>
-  <td><span class="diff easy">Easy</span></td>
-  <td>2026-02-10 02:32:48</td>
-</tr>
-<tr>
-  <td>❌</td>
-  <td><code>single_number</code></td>
-  <td><span class="diff easy">Easy</span></td>
-  <td>2026-02-10 02:32:48</td>
-</tr>
-<tr>
-  <td>❌</td>
-  <td><code>number_of_islands</code></td>
-  <td><span class="diff medium">Medium</span></td>
-  <td>2026-02-10 02:32:47</td>
-</tr>
-<tr>
-  <td>❌</td>
-  <td><code>redundant_connection</code></td>
-  <td><span class="diff medium">Medium</span></td>
-  <td>2026-02-10 02:32:47</td>
-</tr>
-<tr>
-  <td>❌</td>
-  <td><code>implement_trie</code></td>
-  <td><span class="diff medium">Medium</span></td>
-  <td>2026-02-10 02:32:47</td>
-</tr>
-<tr>
-  <td>❌</td>
-  <td><code>word_search_ii</code></td>
-  <td><span class="diff hard">Hard</span></td>
-  <td>2026-02-10 02:32:47</td>
-</tr>
-<tr>
-  <td>❌</td>
-  <td><code>task_scheduler</code></td>
-  <td><span class="diff medium">Medium</span></td>
-  <td>2026-02-10 02:32:46</td>
-</tr>
-<tr>
-  <td>❌</td>
-  <td><code>daily_temperatures</code></td>
-  <td><span class="diff medium">Medium</span></td>
-  <td>2026-02-10 02:32:46</td>
-</tr>
-<tr>
-  <td>❌</td>
-  <td><code>largest_rectangle</code></td>
-  <td><span class="diff hard">Hard</span></td>
-  <td>2026-02-10 02:32:46</td>
-</tr>
-<tr>
-  <td>❌</td>
-  <td><code>next_greater_element</code></td>
-  <td><span class="diff easy">Easy</span></td>
-  <td>2026-02-10 02:32:46</td>
+  <td>✅</td>
+  <td><code>stacks_and_queues</code></td>
+  <td><span class="diff unknown">?</span></td>
+  <td>2026-02-10 16:29</td>
 </tr>
 </tbody>
     </table>
   </div>
 
-  <div class="timestamp">Generated 2026-02-10 02:43:54</div>
+  <div class="timestamp">Generated 2026-02-10 16:29</div>
 
   <script>
     function switchTab(id) {

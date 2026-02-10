@@ -36,14 +36,17 @@ module HelloLeet
 
     def find_files
       dirs = Dir.glob(File.join(ROOT, "[0-2][0-9]_*/")).sort
-      if @filters.any?
-        dirs.select! do |d|
-          @filters.any? do |f|
-            File.basename(d).start_with?(f) || File.basename(d).include?(f)
-          end
+      all_files = dirs.flat_map { |d| Dir.glob(File.join(d, "*.rb")).sort }
+      return all_files unless @filters.any?
+
+      all_files.select do |f|
+        base = File.basename(f, ".rb")
+        dir = File.basename(File.dirname(f))
+        @filters.any? do |filter|
+          dir.start_with?(filter) || dir.include?(filter) || base == filter ||
+            base.include?(filter)
         end
       end
-      dirs.flat_map { |d| Dir.glob(File.join(d, "*.rb")).sort }
     end
 
     def extract_difficulty(file)
@@ -70,13 +73,15 @@ module HelloLeet
         @total_errors += errors
       end
 
+      status = success ? "pass" : "todo"
+
       DB.record(
         @db,
         file: rel,
         pattern: pattern,
         problem: problem,
         difficulty: difficulty,
-        passed: success,
+        status: status,
         tests: runs,
         failures: failures + errors
       )
@@ -92,6 +97,15 @@ module HelloLeet
           end
         puts "  #{HelloLeet.c(:red, "✗")} #{rel}  #{HelloLeet.c(:red, "(#{fail_count} failures)")}"
       end
+    end
+
+    def refresh_dashboard
+      data = DashboardData.new(@db)
+      return if data.problems.empty?
+
+      File.write(Commands::DASHBOARD_PATH, DashboardHTML.render(data))
+    rescue StandardError => e
+      $stderr.puts "  [dashboard] #{e.message}"
     end
 
     def print_summary
@@ -117,6 +131,7 @@ module HelloLeet
         puts ""
         puts "  #{HelloLeet.c(:dim, "History saved → progress.db")}"
         puts "  #{HelloLeet.c(:dim, "View: ruby progress.rb --log  |  --stats  |  --dashboard")}"
+        refresh_dashboard
       end
       puts ""
     end

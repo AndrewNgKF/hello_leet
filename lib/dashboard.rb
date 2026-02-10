@@ -5,7 +5,7 @@ require "rbconfig"
 module HelloLeet
   module Commands
     DASHBOARD_PATH =
-      File.join(File.expand_path("../..", __dir__), "dashboard.html")
+      File.join(File.expand_path("..", __dir__), "dashboard.html")
 
     def self.dashboard(db)
       unless db
@@ -59,29 +59,29 @@ module HelloLeet
 
     def initialize(db)
       @problems = db.execute(<<~SQL)
-        SELECT file, pattern, problem, difficulty, first_pass, last_run
-        FROM first_solve ORDER BY pattern, problem
+        SELECT file, pattern, problem, difficulty, first_pass, last_run, status, tests, failures
+        FROM problems ORDER BY pattern, problem
       SQL
 
       @recent = db.execute(<<~SQL)
-        SELECT problem, pattern, difficulty, status, solved_at
-        FROM solves ORDER BY solved_at DESC LIMIT 20
+        SELECT problem, pattern, difficulty, status, ran_at
+        FROM runs ORDER BY ran_at DESC LIMIT 20
       SQL
 
       @timeline = db.execute(<<~SQL)
         SELECT DATE(first_pass) as day, COUNT(*) as cnt
-        FROM first_solve WHERE first_pass IS NOT NULL
+        FROM problems WHERE first_pass IS NOT NULL
         GROUP BY DATE(first_pass) ORDER BY day
       SQL
 
       @total = @problems.length
-      @solved = @problems.count { |r| r[4] }
+      @solved = @problems.count { |r| r[6] == "pass" }
 
       %w[Easy Medium Hard].each do |d|
         subset = @problems.select { |r| r[3] == d }
         instance_variable_set(
           :"@#{d.downcase}",
-          { all: subset.length, done: subset.count { |r| r[4] } }
+          { all: subset.length, done: subset.count { |r| r[6] == "pass" } }
         )
       end
 
@@ -89,7 +89,11 @@ module HelloLeet
         @problems
           .group_by { |r| r[1] }
           .map do |pat, probs|
-            { name: pat, total: probs.length, done: probs.count { |r| r[4] } }
+            {
+              name: pat,
+              total: probs.length,
+              done: probs.count { |r| r[6] == "pass" }
+            }
           end
     end
   end
@@ -107,6 +111,7 @@ module HelloLeet
         <head>
           <meta charset="UTF-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta http-equiv="refresh" content="10">
           <title>Hello LeetCode — Dashboard</title>
           <style>#{css}</style>
         </head>
@@ -125,8 +130,7 @@ module HelloLeet
 
           <div class="stats-row">
             #{stat_card(d.solved, "Solved")}
-            #{stat_card(d.total - d.solved, "Remaining")}
-            #{stat_card(d.pattern_data.count { |p| p[:done] > 0 }, "Patterns Started")}
+            #{stat_card(d.total - d.solved, "Todo")}
             #{stat_card(d.pattern_data.count { |p| p[:done] == p[:total] }, "Patterns Complete")}
           </div>
 
@@ -141,7 +145,7 @@ module HelloLeet
 
           <div id="tab-all" class="tab-content active">
             <table>
-              <thead><tr><th></th><th>Problem</th><th>Pattern</th><th>Diff</th><th>First Solved</th><th>Last Run</th></tr></thead>
+              <thead><tr><th></th><th>Problem</th><th>Pattern</th><th>Diff</th><th>Tests</th><th>First Solved</th><th>Last Run</th></tr></thead>
               <tbody>#{problem_rows(d.problems)}</tbody>
             </table>
           </div>
@@ -153,7 +157,7 @@ module HelloLeet
             </table>
           </div>
 
-          <div class="timestamp">Generated #{Time.now.strftime("%Y-%m-%d %H:%M:%S")}</div>
+          <div class="timestamp">Generated #{Time.now.strftime("%Y-%m-%d %H:%M")}</div>
 
           <script>
             function switchTab(id) {
@@ -219,16 +223,23 @@ module HelloLeet
 
     def problem_rows(problems)
       problems
-        .map do |_, pattern, problem, diff, first_pass, last_run|
-          cls = first_pass ? "solved" : "todo"
-          icon = first_pass ? "✅" : "⬜"
+        .map do |_, pattern, problem, diff, first_pass, last_run, status, tests, failures|
+          if status == "pass"
+            cls, icon = "solved", "✅"
+          else
+            cls, icon = "todo", "⬜"
+          end
+          progress =
+            tests && tests > 0 ? "#{tests - (failures || 0)}/#{tests}" : "—"
+          first_str = first_pass ? "🏆 #{first_pass}" : "—"
           <<~ROW
           <tr class="#{cls}">
             <td>#{icon}</td>
             <td><code>#{problem}</code></td>
             <td>#{pattern}</td>
             <td>#{diff_badge(diff)}</td>
-            <td>#{first_pass || "—"}</td>
+            <td>#{progress}</td>
+            <td>#{first_str}</td>
             <td>#{last_run || "—"}</td>
           </tr>
         ROW
