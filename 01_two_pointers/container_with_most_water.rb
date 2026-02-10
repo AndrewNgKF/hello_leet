@@ -59,7 +59,7 @@ class TestContainerWithMostWater < Minitest::Test
   end
 
   def test_decreasing
-    assert_equal 6, max_area([4, 3, 2, 1, 4])
+    assert_equal 16, max_area([4, 3, 2, 1, 4])
   end
 
   def test_increasing
